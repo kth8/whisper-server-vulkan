@@ -53,7 +53,7 @@ jobs:
       - name: Wait for server to load
         uses: juliangruber/sleep-action@v2.0.0
         with:
-          time: 15s
+          time: 5s
 
       - name: Download JFK audio
         run: |
@@ -64,7 +64,7 @@ jobs:
         id: api
         with:
           run: |
-            curl -v 127.0.0.1:8001/inference \
+            curl 127.0.0.1:8001/inference \
             -H "Content-Type: multipart/form-data" \
             -F file="@jfk.wav" \
             -F temperature="0.0" \
