@@ -57,7 +57,7 @@ jobs:
 
       - name: Download JFK audio
         run: |
-          curl -o jfk.mp3 https://github.com/ggml-org/whisper.cpp/raw/refs/heads/master/samples/jfk.mp3
+          curl -Lo jfk.mp3 https://github.com/ggml-org/whisper.cpp/raw/refs/heads/master/samples/jfk.mp3
 
       - name: Run inference
         uses: mathiasvr/command-output@v2.0.0
