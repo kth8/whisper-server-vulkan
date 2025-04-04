@@ -57,7 +57,7 @@ jobs:
 
       - name: Download JFK audio
         run: |
-          curl -Lo jfk.mp3 https://github.com/ggml-org/whisper.cpp/raw/refs/heads/master/samples/jfk.mp3
+          curl -Lo jfk.wav https://github.com/ggml-org/whisper.cpp/raw/refs/heads/master/samples/jfk.wav
 
       - name: Run inference
         uses: mathiasvr/command-output@v2.0.0
@@ -66,7 +66,7 @@ jobs:
           run: |
             curl -v 127.0.0.1:8001/inference \
             -H "Content-Type: multipart/form-data" \
-            -F file="@jfk.mp3" \
+            -F file="@jfk.wav" \
             -F temperature="0.0" \
             -F temperature_inc="0.2" \
             -F response_format="text"
