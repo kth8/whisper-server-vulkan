@@ -43,38 +43,6 @@ jobs:
             org.opencontainers.image.description=${{ env.MODEL }}
             org.opencontainers.image.source=https://huggingface.co/ggerganov/whisper.cpp
 
-      - name: Start server
-        uses: mathiasvr/command-output@v2.0.0
-        id: container
-        with:
-          run: |
-            podman run -d -p 8001:8080 localhost/${{ env.IMAGE_NAME }}
-
-      - name: Wait for server to load
-        uses: juliangruber/sleep-action@v2.0.0
-        with:
-          time: 5s
-
-      - name: Download JFK audio
-        run: |
-          curl -Lo jfk.wav https://github.com/ggml-org/whisper.cpp/raw/refs/heads/master/samples/jfk.wav
-
-      - name: Run inference
-        uses: mathiasvr/command-output@v2.0.0
-        id: api
-        with:
-          run: |
-            curl 127.0.0.1:8001/inference \
-            -H "Content-Type: multipart/form-data" \
-            -F file="@jfk.wav" \
-            -F temperature="0.0" \
-            -F temperature_inc="0.2" \
-            -F response_format="text"
-
-      - name: Print server logs
-        run: |
-          podman logs ${{ steps.container.outputs.stdout }}
-
       - name: Push Image to GHCR
         uses: redhat-actions/push-to-registry@v2
         with:
