@@ -57,26 +57,19 @@ jobs:
 
       - name: Download JFK audio
         run: |
-          curl -o jfk.wav https://github.com/ggml-org/whisper.cpp/raw/refs/heads/master/samples/jfk.wav
+          curl -o jfk.wav https://github.com/ggml-org/whisper.cpp/raw/refs/heads/master/samples/jfk.mp3
 
-      - name: Get chat completion
+      - name: Run inference
         uses: mathiasvr/command-output@v2.0.0
         id: api
         with:
           run: |
             curl -v 127.0.0.1:8001/inference \
             -H "Content-Type: multipart/form-data" \
-            -F file="@jfk.wav" \
+            -F file="@jfk.mp3" \
             -F temperature="0.0" \
             -F temperature_inc="0.2" \
             -F response_format="text"
-
-      - name: Format response
-        uses: direct-actions/jq@v0.1.0
-        with:
-          input: ${{ steps.api.outputs.stdout }}
-          filter: ".segments[].text"
-          raw-output: true
 
       - name: Print server logs
         run: |
