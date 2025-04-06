@@ -11,7 +11,7 @@ on:
 
 env:
   IMAGE_NAME: whisper-server-vulkan
-  MODEL: ggml-large-v3-turbo-q8_0.bin
+  MODEL: ggml-medium-q8_0.bin
 
 jobs:
   build:
