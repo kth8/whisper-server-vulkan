@@ -35,6 +35,6 @@ COPY --from=builder /whisper.cpp/build/ggml/src/libggml-base.so .
 COPY --from=builder /whisper.cpp/build/ggml/src/libggml-cpu.so .
 COPY --from=builder /whisper.cpp/build/ggml/src/ggml-vulkan/libggml-vulkan.so .
 
-COPY ggml-large-v3-turbo-q8_0.bin .
+COPY ggml-medium-q8_0.bin .
 
-CMD ["/app/whisper-server", "-m", "ggml-large-v3-turbo-q8_0.bin", "--host", "0.0.0.0"]
+CMD ["/app/whisper-server", "-m", "ggml-medium-q8_0.bin", "--host", "0.0.0.0"]
