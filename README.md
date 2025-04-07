@@ -2,15 +2,16 @@
 
 ```
 docker container run \
-  --device /dev/kfd \
-  --device /dev/dri \
   --detach \
   --init \
+  --device /dev/kfd \
+  --device /dev/dri \
   --read-only \
   --tmpfs /root/.cache/mesa_shader_cache \
+  --restart always \
   --name whisper \
   --label io.containers.autoupdate=registry \
-  --publish 8001:8080 \
+  --publish 8002:8080 \
   ghcr.io/kth8/whisper-server-vulkan:latest
 ```
-Verify if the server is running by going to http://127.0.0.1:8001 in your web browser.
+Verify if the server is running by going to http://127.0.0.2:8001 in your web browser.

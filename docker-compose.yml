@@ -1,13 +1,17 @@
 version: "3.8"
 services:
-  whisper-server-vulkan:
-    image: ghcr.io/kth8/whisper-server-vulkan
-    container_name: whisper-server-vulkan
-    init: true
-    labels:
-      - "io.containers.autoupdate=registry"
-    ports:
-      - "8001:8080"
+  whisper:
+    image: ghcr.io/kth8/whisper-server-vulkan:latest
+    container_name: whisper
+    restart: always
+    read_only: true
     devices:
       - /dev/kfd
       - /dev/dri
+    tmpfs:
+      - /root/.cache/mesa_shader_cache
+    ports:
+      - "8002:8080"
+    labels:
+      io.containers.autoupdate: "registry"
+    init: true
