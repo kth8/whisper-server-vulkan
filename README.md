@@ -14,4 +14,4 @@ docker container run \
   --publish 8002:8080 \
   ghcr.io/kth8/whisper-server-vulkan:latest
 ```
-Verify if the server is running by going to http://127.0.0.2:8001 in your web browser.
+Verify if the server is running by going to http://127.0.0.1:8002 in your web browser.
