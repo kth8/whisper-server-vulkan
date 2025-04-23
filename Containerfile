@@ -1,40 +1,29 @@
-FROM debian:latest AS builder
+FROM almalinux:9-minimal AS builder
 
-ENV DEBIAN_FRONTEND=noninteractive
-
-RUN apt update && \
-    apt install -y libvulkan-dev glslc cmake git build-essential
+RUN microdnf -y install vulkan-loader-devel glslc git gcc-c++ cmake make
 
 RUN git clone --depth 1 https://github.com/ggml-org/whisper.cpp.git
 
-WORKDIR /whisper.cpp
-
-RUN cmake -B build \
-    -DGGML_VULKAN=1 \
+RUN cmake whisper.cpp \
+    -B whisper.cpp/build \
+    -DGGML_VULKAN=ON \
+    -DBUILD_SHARED_LIBS=OFF \
     -DCMAKE_C_FLAGS="-march=sandybridge -mtune=generic -mno-avx -mno-avx2 -mno-bmi -mno-bmi2" \
     -DCMAKE_CXX_FLAGS="-march=sandybridge -mtune=generic -mno-avx -mno-avx2 -mno-bmi -mno-bmi2"
 
-RUN cmake --build build -j --config whisper-server
+RUN cmake --build whisper.cpp/build -j --target whisper-server
 
-RUN ldd /whisper.cpp/build/bin/whisper-server
+RUN ldd whisper.cpp/build/bin/whisper-server
 
-FROM debian:latest
+FROM almalinux:9-minimal
 
-ENV DEBIAN_FRONTEND=noninteractive
+ARG MODEL
 
-WORKDIR /app
-
-RUN apt update && \
-    apt install -y mesa-vulkan-drivers libgomp1 --no-install-recommends && \
-    rm -rf /var/lib/apt/lists/*
+RUN microdnf -y install mesa-vulkan-drivers libgomp && \
+    microdnf clean all && \
+    rm -rf /var/cache/dnf
 
 COPY --from=builder /whisper.cpp/build/bin/whisper-server .
-COPY --from=builder /whisper.cpp/build/src/libwhisper.so.1 .
-COPY --from=builder /whisper.cpp/build/ggml/src/libggml.so .
-COPY --from=builder /whisper.cpp/build/ggml/src/libggml-base.so .
-COPY --from=builder /whisper.cpp/build/ggml/src/libggml-cpu.so .
-COPY --from=builder /whisper.cpp/build/ggml/src/ggml-vulkan/libggml-vulkan.so .
+COPY ${MODEL} .
 
-COPY ggml-medium-q8_0.bin .
-
-CMD ["/app/whisper-server", "-m", "ggml-medium-q8_0.bin", "--host", "0.0.0.0"]
+CMD ["/whisper-server", "-m", "ggml-medium-q8_0.bin", "--host", "0.0.0.0"]
