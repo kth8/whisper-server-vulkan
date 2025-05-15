@@ -26,4 +26,4 @@ RUN microdnf -y install mesa-vulkan-drivers libgomp && \
 COPY --from=builder /whisper.cpp/build/bin/whisper-server .
 COPY ${MODEL} .
 
-CMD ["/whisper-server", "-m", "ggml-small.en-q8_0.bin", "--host", "0.0.0.0"]
+CMD ["/whisper-server", "-m", "ggml-large-v3-turbo-q8_0.bin", "--host", "0.0.0.0"]

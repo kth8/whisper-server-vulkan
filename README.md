@@ -1,4 +1,4 @@
-[whisper.cpp server](https://github.com/ggml-org/whisper.cpp/tree/master/examples/server) and [ggml-small.en-q8_0.bin](https://huggingface.co/ggerganov/whisper.cpp) model bundled together inside a Docker image. Compiled with Vulkan support and without AVX requirement to run on old hardware. Tested using [i3-3220 CPU](https://www.intel.com/content/www/us/en/products/sku/65693/intel-core-i33220-processor-3m-cache-3-30-ghz/specifications.html?q=CM8063701137502) with [RX 470 GPU](https://www.techpowerup.com/gpu-specs/radeon-rx-470.c2861) running Fedora Linux.
+[whisper.cpp server](https://github.com/ggml-org/whisper.cpp/tree/master/examples/server) and [ggml-large-v3-turbo-q8_0.bin](https://huggingface.co/ggerganov/whisper.cpp) model bundled together inside a Docker image. Compiled with Vulkan support and without AVX requirement to run on old hardware. Tested using [i3-3220 CPU](https://www.intel.com/content/www/us/en/products/sku/65693/intel-core-i33220-processor-3m-cache-3-30-ghz/specifications.html?q=CM8063701137502) with [RX 470 GPU](https://www.techpowerup.com/gpu-specs/radeon-rx-470.c2861) running Fedora Linux.
 
 ```
 docker container run \
