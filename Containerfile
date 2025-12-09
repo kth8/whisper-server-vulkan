@@ -5,14 +5,15 @@ WORKDIR /app
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+    apt-get install -y \
     build-essential \
     cmake \
     git \
     glslc \
     libvulkan-dev \
     pkg-config \
-    wget && \
+    curl \
+    libcurl4-openssl-dev && \
     rm -rf /var/lib/apt/lists/*
 
 RUN git clone --depth 1 https://github.com/ggml-org/whisper.cpp.git
