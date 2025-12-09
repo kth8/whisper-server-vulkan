@@ -29,7 +29,7 @@ jobs:
 
       - name: Download GGUF
         run: |
-          huggingface-cli download ggerganov/whisper.cpp --include "${{ env.MODEL }}" --local-dir .
+          hf download ggerganov/whisper.cpp --include "${{ env.MODEL }}" --local-dir .
 
       - name: Checksum GGUF
         run: |
