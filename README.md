@@ -11,7 +11,10 @@ docker container run \
   --restart always \
   --name whisper \
   --label io.containers.autoupdate=registry \
-  --publish 8002:8080 \
+  --publish 8080:8080 \
   ghcr.io/kth8/whisper-server-vulkan:latest
 ```
-Verify if the server is running by going to http://127.0.0.1:8002 in your web browser.
+Verify if the server is running by going to http://127.0.0.1:8080 in your web browser or using the CLI
+```
+curl -s "https://cdn.openai.com/whisper/draft-20220913a/micro-machines.wav" | curl -s -X POST -F "file=@-;filename=audio.wav" http://127.0.0.1:8080/v1/audio/transcriptions
+```
