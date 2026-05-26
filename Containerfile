@@ -10,6 +10,8 @@ RUN apt-get update && \
     cmake \
     git \
     glslc \
+    spirv-headers \
+    glslang-tools \
     libvulkan-dev \
     pkg-config \
     curl \
