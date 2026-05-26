@@ -48,4 +48,5 @@ COPY ${MODEL} .
 
 EXPOSE 8080
 
-CMD ["whisper-server", "-m", "ggml-large-v3-turbo-q8_0.bin", "--host", "0.0.0.0", "--port", "8080", "--inference-path", "/v1/audio/transcriptions"]
+ENTRYPOINT ["whisper-server", "--host", "0.0.0.0", "--port", "8080", "--inference-path", "/v1/audio/transcriptions"]
+CMD ["-m", "ggml-large-v3-turbo-q8_0.bin"]
